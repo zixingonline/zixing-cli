@@ -7,3 +7,9 @@ A simple webpack scaffold / 一个简易的webpack脚手架工具
 ## On the command line
 ### Install
 `npm install zixing-cli -g`
+### Use
+```
+zixing init <Project Name>
+cd <Project Name>
+npm install
+```
