@@ -6,19 +6,41 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');		
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;		// 图片压缩工具
 
+const glob = require("glob");
+const entrys = {}; 															// 动态添加入口文件
+const htmlCfgs = []; 														// 动态添加入口文件Plugins配置
+const htmls = glob.sync('src/views/*.html');	 							// 扫描出入口页面模板的路径
+htmls.forEach((filePath) => {
+	let path = filePath.split('/');
+    let file = path.pop();
+    let name = file.split('.')[0];
+    entrys[name] = './src/' + name + '.js'; 
+    htmlCfgs.push( 													
+        new HtmlWebpackPlugin({	
+    	 	filename: file,
+            template: filePath,
+            inject: 'body',
+            chunks: [name, 'common', 'vendor']
+        }),
+    )
+})
+htmlCfgs.push(							// 添加所有需要用到的plugins
+	new MiniCssExtractPlugin({
+		filename: './static/css/[name].[hash:8].css',
+	}),
 
+	new ImageminPlugin({
+	  	disable: process.env.NODE_ENV === 'production' ? true : false,
+	  	pngquant: {						//图片质量
+	    	quality: '95-100'
+	  	}
+	})
+)
 
 module.exports = {
-	entry: {
-		app: './src/index.js'
-	},
-	// entry: {
-	// 	index: './src/index.js',
-	// 	detail: './src/detail.js',
-	// },
+	entry: entrys,
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		// filename: 'bundle.js'
 		filename: process.env.NODE_ENV === 'production' ? 'static/js/bundle.[chunkhash].js' : 'static/js/bundle.js',
 		chunkFilename: process.env.NODE_ENV === 'production' ? 'static/js/[name].[chunkhash].js' : 'static/js/[name].js'
 	},
@@ -64,25 +86,8 @@ module.exports = {
 		    }
 		]
 	},
-	plugins: [
-		new ImageminPlugin({
-	      	disable: process.env.NODE_ENV === 'production' ? true : false,
-	      	pngquant: {//图片质量
-	        	quality: '95-100'
-	      	}
-	    }),
 
-		new MiniCssExtractPlugin({
-			filename: './static/css/[name].[hash:8].css',
-	    }),
-
-		new HtmlWebpackPlugin({	
-    	 	filename: 'index.html',
-            template: './src/views/index.html',
-            inject: 'body',
-            // chunks: ['index', 'common', 'vendor']
-        }),
-	],
+	plugins: htmlCfgs,
 
 	resolve: {
         alias: {
