@@ -95,7 +95,12 @@ module.exports = {
 				test:/\.js$/,
 				exclude:/node_modules/,
 				use:'babel-loader'
-		    }
+		    },{
+			    test: /\.(vue|js)$/,
+			    loader: 'eslint-loader',
+			    exclude: /node_modules/,
+			    enforce: 'pre'
+			},
 		]
 	},
 
