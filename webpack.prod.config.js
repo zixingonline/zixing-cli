@@ -9,6 +9,12 @@ module.exports = merge(baseConfig, {
 	plugins: [
 		new CleanWebpackPlugin(),		// 清理dist文件夹
 		new OptimizeCSSAssetsPlugin(),
-	]
+	],
+
+	optimization: {
+		runtimeChunk: {						// 该项会导致开发环境热更模块失效
+		  	name: 'manifest'
+		}
+	}
 })
 

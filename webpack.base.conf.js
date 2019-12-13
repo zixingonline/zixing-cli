@@ -70,7 +70,8 @@ module.exports = {
 					      	publicPath: '../../' 
 					    }
 					},
-		        	"css-loader"
+		        	"css-loader",
+		        	'postcss-loader'
 		        ]
 		  	},{
 	            test: /\.less$/,
@@ -82,7 +83,8 @@ module.exports = {
 					    }
 					},
 					'css-loader',
-					'less-loader'
+					'less-loader',
+		        	'postcss-loader'
 		        ],
 	        },{
 		  		test: /\.(woff2|woff|eot|ttf|otf)(\?.*)?$/,
@@ -108,7 +110,8 @@ module.exports = {
 
 	resolve: {
         alias: {
-            'vue': 'vue/dist/vue.js'
+            'vue': 'vue/dist/vue.js',
+            '@': path.resolve(__dirname,'./src'),			// 别名：js文件中使用‘@’代替‘./src’，html、css需用‘~@’
         }
     },
 
@@ -147,9 +150,6 @@ module.exports = {
 	            }
 	        }
 	    },
-		runtimeChunk: {
-		  	name: 'manifest'
-		}
 	},
 }
 
