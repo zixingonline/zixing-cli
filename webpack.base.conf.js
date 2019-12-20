@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); 				// 打包关联htm
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");		// css提取到一个文件
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');		// css压缩
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;		// 图片压缩工具
 
 const glob = require("glob");
 const entrys = {}; 															// 动态添加入口文件
@@ -27,13 +26,6 @@ htmls.forEach((filePath) => {
 htmlCfgs.push(							// 添加所有需要用到的plugins
 	new MiniCssExtractPlugin({
 		filename: './static/css/[name].[hash:8].css',
-	}),
-
-	new ImageminPlugin({
-	  	disable: process.env.NODE_ENV === 'production' ? true : false,
-	  	pngquant: {						//图片质量
-	    	quality: '95-100'
-	  	}
 	})
 )
 
