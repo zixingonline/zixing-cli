@@ -19,7 +19,7 @@ htmls.forEach((filePath) => {
     	 	filename: file,
             template: filePath,
             inject: 'body',
-            chunks: [name, 'common', 'vendor']
+            chunks: [name, 'common', 'vendor', 'manifest']
         }),
     )
 })
@@ -33,7 +33,7 @@ module.exports = {
 	entry: entrys,
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: process.env.NODE_ENV === 'production' ? 'static/js/bundle.[chunkhash].js' : 'static/js/bundle.js',
+		filename: process.env.NODE_ENV === 'production' ? 'static/js/[name].bundle.[chunkhash].js' : 'static/js/[name].js',
 		chunkFilename: process.env.NODE_ENV === 'production' ? 'static/js/[name].[chunkhash].js' : 'static/js/[name].js'
 	},
 	module: {
