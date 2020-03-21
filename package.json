@@ -3,6 +3,11 @@
   "version": "{{version}}",
   "description": "{{description}}",
   "main": "index.js",
+  "browserslist": [
+    "iOS >= 6",
+    "Android >= 4",
+    "IE >= 9"
+  ],
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --mode production --config webpack.prod.config",
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --config webpack.dev.config"
