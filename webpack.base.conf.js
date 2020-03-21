@@ -75,8 +75,8 @@ module.exports = {
 					    }
 					},
 					'css-loader',
+		        	'postcss-loader',
 					'less-loader',
-		        	'postcss-loader'
 		        ],
 	        },{
 		  		test: /\.(woff2|woff|eot|ttf|otf)(\?.*)?$/,
